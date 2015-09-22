@@ -23,8 +23,9 @@ class Isbn_test < Minitest::Test
 	assert_equal(true, valid_isbn("123 4567 890"))
 	end
 	
-	def for_10_digit_math
-	assert_equal(true, checksum_valid("1234567882"))
+	def test_for_10_digit_math
+	assert_equal(true, check_digit_valid_10("0306406152"))
+	assert_equal(true, check_digit_valid_10("08044-2957X"))
 	end
 	
 end
