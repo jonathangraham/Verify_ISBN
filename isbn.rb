@@ -2,7 +2,7 @@ def check_for_space_or_dash(n)
 
 	if n.include? " "
 	n.delete! ' '
-	elsif n.include? "-"
+	else n.include? "-"
 	n.delete! '-'
 	end
 check_number_length(n)
@@ -11,27 +11,28 @@ end
 
 def check_number_length(n)
 
-number = n.split ""
+@number = n.split ""
+length = @number.count
 
-case number
-	when number.length == 10
-	check_digit_contains_X(number)
-		if only_numeric_characters(check_digit_contains_X) == true
+case length
+	when 10
+	check_digit_contains_X(@number)
+		if only_numeric_characters(@new_number) == true
 		output(false)
-		else check_digit_valid_10(check_digit_contains_X)
+		else check_digit_valid_10(@new_number)
 		end
-		
-	when number.length == 13
-		if only_numeric_characters(check_digit_contains_X) == true
+	#puts "10"	
+	when 13
+		if only_numeric_characters(@number) == true
 		output(false)
-		else check_digit_valid_13(number)
+		else check_digit_valid_13(@number)
 		end
-		
+	#puts "13"	
 	else output(false)
+	#else puts "false"
 	
-number.length == 10 || number.length == 13 ? true : false
 end
-
+length == 10 || length == 13 ? true : false
 end
 
 def check_digit_contains_X(number)
@@ -40,7 +41,7 @@ def check_digit_contains_X(number)
 	number[9] = "10"
 	end
 
-number
+@new_number = number
 end
 
 def only_numeric_characters(number)
@@ -67,9 +68,9 @@ check_digit = sum%11
 	
 	if check_digit == array[9]
 	output(true)
-	return true
 	else output(false)
 	end
+check_digit == array[9] ? true : false
 end
 
 def check_digit_valid_13(number)
@@ -99,10 +100,9 @@ check_digit = 0
 		
 	if array[12] == check_digit
 	output(true)
-	return true
 	else output(false)
 	end
-
+array[12] == check_digit ? true : false
 end
 
 def output(result)
@@ -112,6 +112,6 @@ def output(result)
 	end
 end
 
-#puts "Enter the ISBN number to be verified:"
-#n = gets.chomp
-#check_for_space_or_dash(n)
+puts "Enter the ISBN number to be verified:"
+n = gets.chomp
+check_for_space_or_dash(n)
