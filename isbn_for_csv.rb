@@ -5,34 +5,43 @@ def check_for_space_or_dash(n)
 	else n.include? "-"
 	n.delete! '-'
 	end
-check_number_length(n)
-n
+remove_extra_characters(n)
+
 end
 
-def check_number_length(n)
+def remove_extra_characters(n)
 
-@number = n.split ""
-length = @number.count
+number = n.split ""
+number.slice!(0)
+number.slice!(-1)
+number.slice!(-1)
+check_number_length(number)
+
+end
+
+def check_number_length(number)
+@number = number
+length = number.count
 
 case length
+	
 	when 10
 	check_digit_contains_X(@number)
 		if only_numeric_characters(@new_number) == true
 		@output = false
 		else check_digit_valid_10(@new_number)
 		end
-	#puts "10"	
+	
 	when 13
 		if only_numeric_characters(@number) == true
 		@output = false
 		else check_digit_valid_13(@number)
 		end
-	#puts "13"	
+	
 	else @output = false
-	#else puts "false"
 	
 end
-length == 10 || length == 13 ? true : false
+
 end
 
 def check_digit_contains_X(number)
@@ -53,6 +62,7 @@ n = number.join("")
 end
 
 def check_digit_valid_10(number)
+
 array =[]
 
 	number.each { |value|
@@ -70,7 +80,7 @@ check_digit = sum%11
 	@output = true
 	else @output = false
 	end
-check_digit == array[9] ? true : false
+
 end
 
 def check_digit_valid_13(number)
@@ -102,18 +112,5 @@ check_digit = 0
 	@output = true
 	else @output = false
 	end
-array[12] == check_digit ? true : false
-end
 
-=begin
-def output(result)
-	if result == true
-	puts "That is a valid ISBN number."
-	else puts "That is not a valid ISBN number."
-	end
 end
-
-puts "Enter the ISBN number to be verified:"
-n = gets.chomp
-check_for_space_or_dash(n)
-=end
