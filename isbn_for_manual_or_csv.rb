@@ -1,15 +1,6 @@
-def check_for_space(n)
-	if n.include? " "
-	n.delete! ' '
-	end
-@n1 = n
-n #for TDD
-end
-
-def check_for_dash(n)
-	if n.include? "-"
-	n.delete! '-'
-	end
+def check_for_space_or_dash(n)
+	n.delete! ' ' if n.include? " "
+	n.delete! '-' if n.include? "-"
 @number = n.split ""
 n #for TDD
 end
@@ -36,7 +27,7 @@ case length
 	
 	when 13
 		if only_numeric_characters(@number3) == true
-		@output = false
+		@result = false
 		else check_digit_valid_13(@number3)
 		end
 	
@@ -106,29 +97,14 @@ check_digit = 0
 	@result = true
 	else @result = false
 	end
-
-end
-
-def output_manual(result)
-	if result == true
-	print "\nThat is a valid ISBN number.\n\n"
-	else print "\nThat is not a valid ISBN number.\n\n"
-	end
-end
-
-def output_csv(result)
-	if result == true
-	@new_file.puts @row.chomp + ", Valid"
-	
-	else @new_file.puts @row.chomp + ", Invalid"
-	end
+array[12] == check_digit ? true : false #for TDD
 end
 
 def import_menu
 puts """
 Choose manual input or csv import:
 
-1. manual ISBN number input
+1. Manual ISBN number input
 2. Use input_isbn_file.csv
 
 """
@@ -138,21 +114,19 @@ choice = gets.chomp.to_i
 	if choice == 1
 		print "\nEnter ISBN Number:\n"
 		n = gets.chomp
-		check_for_space(n)
-		check_for_dash(@n1)
+		check_for_space_or_dash(n)
 		check_number_length(@number)
-		output_manual(@result)
+		print @result == true ? "\nThat is a valid ISBN number.\n\n" : "\nThat is not a valid ISBN number.\n\n"
 	elsif choice == 2
 		file = File.open('input_isbn_file.csv', "r")
 		@new_file = File.open('output_isbn_file.csv', "w")
 
 			file.each do |row| 
-			check_for_space(row)
-			check_for_dash(@n1)
+			check_for_space_or_dash(row)
 			remove_extra_characters(@number)
 			check_number_length(@number2)
 			@row = row
-			output_csv(@result)
+			@new_file.puts @result == true ? @row.chomp + ", Valid" : @row.chomp + ", Invalid"
 			end
 		
 		file.close
