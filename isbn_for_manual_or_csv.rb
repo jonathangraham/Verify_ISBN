@@ -1,34 +1,35 @@
 def check_for_space_or_dash(n)
 	n.delete! ' ' if n.include? " "
 	n.delete! '-' if n.include? "-"
-@number = n.split ""
+#@number = n.split ""
 n #for TDD
 end
 
 def remove_extra_characters(number)
+number = number.split ""
 	number.slice!(0)
 	number.slice!(-1)
 	number.slice!(-1)
-@number2 = number
+number
 end
 
 def check_number_length(number)
-@number3 = number
-length = @number3.count
+#@number3 = number
+length = number.count
 
 case length
 	
 	when 10
-	check_digit_contains_X(@number3)
-		if only_numeric_characters(@new_number) == true
+	new_number = check_digit_contains_X(number)
+		if only_numeric_characters(new_number) == true
 		@result = false
-		else check_digit_valid_10(@new_number)
+		else check_digit_valid_10(new_number)
 		end
 	
 	when 13
-		if only_numeric_characters(@number3) == true
+		if only_numeric_characters(number) == true
 		@result = false
-		else check_digit_valid_13(@number3)
+		else check_digit_valid_13(number)
 		end
 	
 	else @result = false
@@ -43,7 +44,7 @@ def check_digit_contains_X(number)
 	number[9] = "10"
 	end
 
-@new_number = number
+number
 end
 
 def only_numeric_characters(n)
@@ -114,23 +115,23 @@ choice = gets.chomp.to_i
 	if choice == 1
 		print "\nEnter ISBN Number:\n"
 		n = gets.chomp
-		check_for_space_or_dash(n)
-		check_number_length(@number)
+		sdremoved = check_for_space_or_dash(n)
+		removed = sdremoved.split ""
+		check_number_length(removed)
 		print @result == true ? "\nThat is a valid ISBN number.\n\n" : "\nThat is not a valid ISBN number.\n\n"
 	elsif choice == 2
 		file = File.open('input_isbn_file.csv', "r")
-		@new_file = File.open('output_isbn_file.csv', "w")
+		new_file = File.open('output_isbn_file.csv', "w")
 
 			file.each do |row| 
-			check_for_space_or_dash(row)
-			remove_extra_characters(@number)
-			check_number_length(@number2)
-			@row = row
-			@new_file.puts @result == true ? @row.chomp + ", Valid" : @row.chomp + ", Invalid"
+			sdremoved = check_for_space_or_dash(row)
+			removed = remove_extra_characters(sdremoved)
+			check_number_length(removed)
+			new_file.puts @result == true ? row.chomp + ", Valid" : row.chomp + ", Invalid"
 			end
 		
 		file.close
-		@new_file.close
+		new_file.close
 		print "\n\nProcessing Complete - output_isbn_file.rb is ready.\n\n"
 	else 
 		puts "Choose 1 or 2 please"
